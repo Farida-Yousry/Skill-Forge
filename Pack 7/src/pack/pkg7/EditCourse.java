@@ -6,19 +6,18 @@ import org.json.JSONObject;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
-import pack.pkg7.InstructorService;
 
 public class EditCourse extends javax.swing.JFrame {
   private final CourseJsonDB courseDB = new CourseJsonDB();
-  private InstructorService instructorService;
+  private Instructor instructor;
 
     private JTextField courseIdField;
     private JButton viewBtn;
     private JTable studentTable;
     private DefaultTableModel tableModel;
 
-    public EditCourse( InstructorService i) {
-        this.instructorService = i;
+    public EditCourse( Instructor i,InstructorService Parent) {
+        this.instructor = i;
         //this.instructorService = service;
         setLayout(null);
 
@@ -36,8 +35,8 @@ public class EditCourse extends javax.swing.JFrame {
 
         //
         tableModel = new DefaultTableModel(new Object[]{"Student ID", "Student Name", "Email"}, 0);
-        studentTable = new JTable(tableModel);
-        JScrollPane sp = new JScrollPane(studentTable);
+        jTable2.setModel(tableModel);
+        JScrollPane sp = new JScrollPane(jTable2);
         sp.setBounds(20, 70, 510, 200);
         add(sp);
 
@@ -79,13 +78,13 @@ public class EditCourse extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CourseID", "Name", "Description"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -120,8 +119,30 @@ public class EditCourse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        var r1=jTable2.getSelectedRow();
+        int selectedRowIndex = jTable2.getSelectedRow();
+        
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a course to edit!", "No Row Selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Object courseIdObject = jTable2.getModel().getValueAt(selectedRowIndex, 0);
+        String courseId = courseIdObject.toString();
+        
+        // Example: Assuming Course Title is in column 2 (index 2)
+        Object courseTitleObject = jTable2.getModel().getValueAt(selectedRowIndex, 1);
+        String courseTitle = courseTitleObject.toString();
+        
+
+        // 3. Display the extracted values (for testing)
+        JOptionPane.showMessageDialog(this, 
+            "Selected Course ID: " + courseId + "\n" +
+            "Selected Course Title: " + courseTitle,
+            "Course Selected", JOptionPane.INFORMATION_MESSAGE);
+        
+        // *** TODO: Add logic here to open an edit dialog/form ***
+        // E.g., new EditCourseDetailsForm(courseId, courseTitle).setVisible(true);
+
+ 
        
         
     }//GEN-LAST:event_jButton1ActionPerformed
