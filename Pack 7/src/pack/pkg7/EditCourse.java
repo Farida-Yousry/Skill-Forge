@@ -9,15 +9,12 @@ import java.awt.event.ActionEvent;
 
 public class EditCourse extends javax.swing.JFrame {
   private final CourseJsonDB courseDB = new CourseJsonDB();
-  private Instructor instructor;
 
     private JTextField courseIdField;
     private JButton viewBtn;
-    private JTable studentTable;
     private DefaultTableModel tableModel;
 
     public EditCourse( Instructor i,InstructorService Parent) {
-        this.instructor = i;
         //this.instructorService = service;
         setLayout(null);
 
@@ -84,12 +81,12 @@ public class EditCourse extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "CourseID", "Name", "Description"
+                "CourseID", "Title", "Description"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Edit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -141,9 +138,6 @@ public class EditCourse extends javax.swing.JFrame {
         
         // *** TODO: Add logic here to open an edit dialog/form ***
         // E.g., new EditCourseDetailsForm(courseId, courseTitle).setVisible(true);
-
- 
-       
         
     }//GEN-LAST:event_jButton1ActionPerformed
  private void viewCourses() {
@@ -166,11 +160,10 @@ public class EditCourse extends javax.swing.JFrame {
                 JSONObject s = Courses.getJSONObject(i);
                 tableModel.addRow(new Object[]{
                     s.getString("description"),
-                    s.getString("students"),
+                    //s.getString("students"),
                     s.getString("title"),
-                    s.getString("courseId"),
-                    s.getString("instructorId"),
                     s.getString("courseId")
+                  //  s.getString("instructorId"),
                 });
             }
 

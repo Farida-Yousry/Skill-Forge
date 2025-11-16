@@ -1,22 +1,53 @@
-
 package pack.pkg7;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
-import pack.pkg7.InstructorService;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author Hannah Emad
- */
 public class DeleteCourse extends javax.swing.JFrame {
+  private final CourseJsonDB courseDB = new CourseJsonDB();
+  private Instructor instructor;
 
-   private final CourseJsonDB courseDB = new CourseJsonDB();
-   
-    public DeleteCourse() {
+    private JTextField courseIdField;
+    private JButton viewBtn;
+    private JTable studentTable;
+    private DefaultTableModel tableModel;
+    private InstructorService instructorService;
+   public DeleteCourse( Instructor i,InstructorService is) {
+        this.instructor = i;
+        this.instructorService=is;
+        //this.instructorService = service;
+        setLayout(null);
+
+        JLabel lblCourseId = new JLabel("Course ID:");
+        lblCourseId.setBounds(20, 20, 100, 25);
+        add(lblCourseId);
+
+        courseIdField = new JTextField();
+        courseIdField.setBounds(120, 20, 250, 25);
+        add(courseIdField);
+
+        viewBtn = new JButton("Delete Course");
+        viewBtn.setBounds(380, 20, 150, 25);
+        add(viewBtn);
+
+        
+        tableModel = new DefaultTableModel(new Object[]{"Student ID", "Student Name", "Email"}, 0);
+        jTable3.setModel(tableModel);
+        JScrollPane sp = new JScrollPane(jTable3);
+        sp.setBounds(20, 70, 510, 200);
+        add(sp);
+
+        viewBtn.addActionListener((ActionEvent e) -> Deletecourse());
+    }
+
+    public DeleteCourse(Instructor inst,InstructorFrontend parent) {
         initComponents();
     }
 
@@ -29,46 +60,122 @@ public class DeleteCourse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+
+        jRadioButton1.setText("jRadioButton1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Course Id", "Title", "Description"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable3);
+
+        jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(309, 309, 309)
+                .addComponent(jButton2)
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//private void viewCourse() {
-      //  String courseId = courseIdField.getText().trim();
 
-        if (courseId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a Course ID!");
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         int selectedRowIndex = jTable3.getSelectedRow();
+        
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a course to delete!", "No Row Selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        int x=0;
+        Object courseIdObject = jTable3.getModel().getValueAt(selectedRowIndex, 0);
+        String courseId = courseIdObject.toString();
+        
+        
+        Object courseTitleObject = jTable3.getModel().getValueAt(selectedRowIndex, 1);
+        String courseTitle = courseTitleObject.toString();
+        
+      try {
+          //
+          //
+          instructorService.deleteCourse(courseId);
+      } catch (IOException ex) {
+                      JOptionPane.showMessageDialog(this, "Course Doesn't exist" ,"COurse doesn't exist", JOptionPane.WARNING_MESSAGE);
+
+      }
+        ArrayList<Course> courses= instructorService.
+  
+        JOptionPane.showMessageDialog(this, 
+            "Selected Course ID: " + courseId + "\n" +
+            "Selected Course Title: " + courseTitle,
+            "Course Selected", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton2ActionPerformed
+ 
+ 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       
+        
+        // *** TODO: Add logic here to open an edit dialog/form ***
+        // E.g., new EditCourseDetailsForm(courseId, courseTitle).setVisible(true);
+
+ 
+       
+        
+    }                                        
+ private void Deletecourse() {
+//        String courseId = courseIdField.getText().trim();
+//
+//        if (courseId.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter a Course ID!");
+//            return;
+//        }
+//        int x=0;
         try {
             //JSONArray Courses = InstructorService.editCourse(courseId, String newTitle, String newDescription);
             // System.out.println(students.length());
            // System.out.println("Students raw: " + students);
            JSONArray Courses = courseDB.loadCourses();
 
-            TableModel.setRowCount(0);
+            tableModel.setRowCount(0);
             //x = students.length();
             for (int i = 0; i < Courses.length(); i++) {
                 JSONObject s = Courses.getJSONObject(i);
                 tableModel.addRow(new Object[]{
-                    s.getString("description"),
-                    s.getString("students"),
+                    //s.getString("description"),
+                    //s.getString("students"),
                     s.getString("title"),
-                    s.getString("courseId"),
-                    s.getString("instructorId"),
                     s.getString("courseId")
+                   // s.getString("instructorId"),
+   
                 });
             }
 
@@ -76,6 +183,25 @@ public class DeleteCourse extends javax.swing.JFrame {
           //  System.out.println(x);
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
+       try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+ }
+
+
     /**
      * @param args the command line arguments
      */
@@ -112,5 +238,9 @@ public class DeleteCourse extends javax.swing.JFrame {
     //}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }
