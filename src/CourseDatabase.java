@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CourseDatabase {
     public String readFromFile(){
-        List<String> lines = new ArrayList<>();
+        ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("course.json"))){
             String line;
             while ((line = br.readLine()) != null) {
@@ -19,9 +19,9 @@ public class CourseDatabase {
         String json = String.join("", lines);
         return json;
     }
-    public List<Course> getAllCourses() {
+    public ArrayList<Course> getAllCourses() {
         String json = readFromFile();
-        List<Course> courses = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
         // remove[ ]
         json = json.substring(1, json.length() - 1);
         String[] courseObjects = json.split("\\},\\{");
@@ -51,11 +51,15 @@ public class CourseDatabase {
         }
         return courses;
     }
-    public void writeToFile(Course course){
-        List<Course> courses = this.getAllCourses();
+    public void addCourse(Course course){
+        ArrayList<Course> courses = this.getAllCourses();
         courses.add(course);
-            try (FileWriter writer = new FileWriter("course.json")) {
-            writer.write("[\n"); // start of JSON array
+        saveToFile();
+    }
+    public void saveToFile(){
+        ArrayList<Course> courses = this.getAllCourses();
+        try (FileWriter writer = new FileWriter("course.json")) {
+            writer.write("[\n"); 
 
             for (int i = 0; i < courses.size(); i++) {
                 Course c = courses.get(i);
@@ -65,6 +69,7 @@ public class CourseDatabase {
                         "  \"title\": \"" + c.getTitle() + "\",\n" +
                         "  \"description\": \"" + c.getDescription() + "\",\n" +
                         "  \"instructorId\": \"" + c.getInstructorId() + "\"\n" +
+                        "  \"lessons\": " + lessonsToJson(c.getLessons()) + ",\n" +
                         "}";
 
                 writer.write(jsonCourse);
@@ -74,11 +79,37 @@ public class CourseDatabase {
                     writer.write(",\n");
                 }
             }
+
             writer.write("\n]");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    private String lessonsToJson(ArrayList<Lesson> lessons) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < lessons.size(); i++) {
+            Lesson l = lessons.get(i);
+            sb.append("{\"lessonId\":\"").append(l.getLessonId())
+              .append("\",\"title\":\"").append(l.getTitle())
+              .append("\",\"content\":\"").append(l.getContent()).append("\"}");
+            if (i < lessons.size() - 1) sb.append(",");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+    public boolean reomveCourse(Course course){
+        ArrayList<Course> courses = getAllCourses();
+        for(int i = 0; i < courses.size(); i++){
+            if(courses.get(i).getCourseId() == course.getCourseId()){
+                courses.remove(courses.get(i));  
+                saveToFile();
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
+
 
 

@@ -7,17 +7,18 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class UserDatabase{
-    public ArrayList<String> readFromFile(){
-        ArrayList<String> users = new ArrayList<>();
+    public String readFromFile(){
+        List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("users.json"))){
             String line;
             while ((line = br.readLine()) != null) {
-                users.add(line);
+                lines.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return users;
+        String json = String.join("", lines);
+        return json;
     } 
     public void writeJson() {
         Student student = new Student("amle","12345","9512","amlegomaa","student","amlegomaa22@gmail.com");
