@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -163,7 +164,7 @@ public class InstructorLessonPannel extends JPanel {
 				}
 				int confirm=JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this student?","Confirm",JOptionPane.YES_NO_OPTION);
 			    if(confirm == JOptionPane.YES_OPTION) {
-			      boolean deleted=course.deleteLesson(selected.getLessonId());
+			      boolean deleted=course.deleteLesson(selected);
 			   if(deleted) {
 				 lessonModel.removeElement(selected);
 			   JOptionPane.showMessageDialog(this,"Lesson deleted Successfully");
@@ -182,7 +183,7 @@ public class InstructorLessonPannel extends JPanel {
  				}
             	 titleField.setText(selected.getTitle());
             	 contentArea.setText(selected.getContent());
-            	// resoursesField.setText(selected.getResources());
+            	resoursesField.setText(String.valueOf(selected.getResources()));
             	 
              }
              
