@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 
 public class UserAccount extends Validations{
 
+
 	private String userName;
 	private String password;
 	private String email;
@@ -15,6 +16,16 @@ public class UserAccount extends Validations{
 	private String fullName;
 	private String role;
 	private int age;
+	UserAccount(String username, String pass, String email, String id, String fullname, String role,int age){
+		userName = username;
+		password = pass;
+		this.email = email;
+		userId = id;
+		this.fullName = fullname;
+		this.role = role;
+		this.age = age;
+		
+	}
 
 	public boolean login(String userName,String password,String role)  {
 		try(Scanner read = new Scanner(new File("Users.txt"))){
@@ -75,5 +86,19 @@ public class UserAccount extends Validations{
 		//JOptionPane.showMessageDialog(null,"Account Created");
 	}
 	}
-
+	public String getUserId(){
+		return userId;
+	}
+	public String getUserName(){
+		return userName;
+	}
+	public String getPass(){
+		return password;
+	}
+	public String getEmail(){
+		return email;
+	}
+	public String getRole(){
+		return role;
+	}
 }
