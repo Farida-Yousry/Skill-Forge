@@ -16,7 +16,9 @@ public class UserAccount extends Validations{
 	private String fullName;
 	private String role;
 	private int age;
-	UserAccount(String username, String pass, String email, String id, String fullname, String role,int age){
+	
+	
+	public UserAccount(String username, String pass, String email, String id, String fullname, String role,int age){
 		userName = username;
 		password = pass;
 		this.email = email;
@@ -25,6 +27,8 @@ public class UserAccount extends Validations{
 		this.role = role;
 		this.age = age;
 		
+	}
+	public UserAccount(){
 	}
 
 	public boolean login(String userName,String password,String role)  {

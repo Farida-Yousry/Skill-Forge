@@ -48,11 +48,7 @@ public class LoginGUI extends JFrame{
 	    JPanel panel = new JPanel(new GridLayout(3,2,10,10));
 	    panel.setBackground(SystemColor.controlHighlight);
 	    panel.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
-	    /*GridBagConstraints gb = new GridBagConstraints();
-	    gb.fill = GridBagConstraints.HORIZONTAL;
-	    gb.insets = new Insets(10,10,10,10,10);
-	    gb.gridx = 0;
-	    gb.gridy = 0;*/
+
 	    
 		JLabel label = new JLabel("  User Name :");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -99,8 +95,6 @@ public class LoginGUI extends JFrame{
 				if(valid) {
 					JOptionPane.showMessageDialog(null,"Login Successfully");
 					dispose();
-					
-					
 				}
 				else {
 					JOptionPane.showMessageDialog(null,"Incorrect UserName or Password");
