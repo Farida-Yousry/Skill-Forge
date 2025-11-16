@@ -38,6 +38,8 @@ public class HomePage extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				UserDatabase db = new UserDatabase();
+				db.writeJson();
 			}
 		});
 	}
