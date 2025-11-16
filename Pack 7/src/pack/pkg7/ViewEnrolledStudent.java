@@ -1,4 +1,5 @@
 package pack.pkg7;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,16 +10,16 @@ import pack.pkg7.InstructorService;
 
 public class ViewEnrolledStudent extends javax.swing.JFrame {
 
-  private InstructorService instructorService;
+    private InstructorService instructorService;
 
     private JTextField courseIdField;
     private JButton viewBtn;
     private JTable studentTable;
     private DefaultTableModel tableModel;
 
-public ViewEnrolledStudent(ViewEnrolledStudent) {
-          InstructorService service = null;
-         this.instructorService = service;
+    public ViewEnrolledStudent( InstructorService i) {
+        this.instructorService = i;
+        //this.instructorService = service;
         setLayout(null);
 
         JLabel lblCourseId = new JLabel("Course ID:");
@@ -42,6 +43,7 @@ public ViewEnrolledStudent(ViewEnrolledStudent) {
 
         viewBtn.addActionListener((ActionEvent e) -> viewStudents());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,23 +83,15 @@ public ViewEnrolledStudent(ViewEnrolledStudent) {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    
 
     private void viewStudents() {
         String courseId = courseIdField.getText().trim();
@@ -106,21 +100,25 @@ public ViewEnrolledStudent(ViewEnrolledStudent) {
             JOptionPane.showMessageDialog(this, "Please enter a Course ID!");
             return;
         }
-
+        int x=0;
         try {
-            JSONArray students = instructorService.viewEnrolledStudents(courseId);
-            tableModel.setRowCount(0);
+            JSONArray students = instructorService.ViewEnrolledStudents(courseId);
+            // System.out.println(students.length());
+           // System.out.println("Students raw: " + students);
 
+            tableModel.setRowCount(0);
+            //x = students.length();
             for (int i = 0; i < students.length(); i++) {
                 JSONObject s = students.getJSONObject(i);
                 tableModel.addRow(new Object[]{
-                        s.getString("studentId"),
-                        s.getString("name"),
-                        s.getString("email")
+                    s.getString("userId"),
+                    s.getString("username"),
+                    s.getString("email")
                 });
             }
 
         } catch (Exception ex) {
+          //  System.out.println(x);
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
     }

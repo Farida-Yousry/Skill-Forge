@@ -1,0 +1,28 @@
+[
+    {
+        "role": "Instructor",
+        "createdCourses": ["2c333f73-a7ac-4aba-8d4d-a867c8240ccb"],
+        "userId": "1234",
+        "email": "ss@ss.com",
+        "passwordHash": "11",
+        "username": "ss"
+    },
+    {
+        "enrolledcourses": ["38cb1c53-3edd-4f7c-be7c-a5259dfcbc2e"],
+        "role": "Student",
+        "progress": 0,
+        "userId": "1",
+        "email": "ss@ss.com",
+        "passwordHash": "11",
+        "username": "ss"
+    },
+    {
+        "enrolledcourses": ["38cb1c53-3edd-4f7c-be7c-a5259dfcbc2e"],
+        "role": "Student",
+        "progress": 0,
+        "userId": "2",
+        "email": "sss@ss.com",
+        "passwordHash": "11",
+        "username": "ss"
+    }
+]
