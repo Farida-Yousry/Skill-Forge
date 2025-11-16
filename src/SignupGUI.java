@@ -39,6 +39,8 @@ public class SignupGUI extends JFrame {
 	public SignupGUI() {
 		setBackground(SystemColor.controlHighlight);
 		setLayout(new BorderLayout(20,20));
+		setSize(600,450);
+		setLocationRelativeTo(null);
 
 		
 		JLabel lblTitle = new JLabel("Signup",SwingConstants.CENTER);
@@ -130,6 +132,7 @@ public class SignupGUI extends JFrame {
 		btnNewButton.setBackground(SystemColor.inactiveCaption);
 		buttonPanel.add(btnNewButton);
         add(buttonPanel,BorderLayout.SOUTH);
+        dispose();
 
 	}
 
