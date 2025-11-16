@@ -4,14 +4,14 @@ public class Lesson {
 	
 		// Attributes
 		private String title;
-		private String lessonID;
+		private String lessonId;
 		private String content;
 		private ArrayList<String> resources; 
 		
 	  // constructor
-		public Lesson(String lessonID,String title,String content,ArrayList<String> resources) {
+		public Lesson(String lessonId,String title,String content,ArrayList<String> resources) {
 		
-			this.lessonID=lessonID;
+			this.lessonId=lessonId;
 			this.title=title;
 			this.content=content;
 			this.resources=resources;
@@ -28,8 +28,8 @@ public class Lesson {
 		}
 		
 	// getters
-		public String getLessonID() {
-			return lessonID;
+		public String getLessonId() {
+			return lessonId;
 		}
 		public String getTitle() {
 			return title;
@@ -40,4 +40,56 @@ public class Lesson {
 		public ArrayList<String> getResources() {
 			return resources;
 		}
-	}
+		
+		public String toString() {
+			return lessonId+"-"+title;
+		}
+}
+		// methods
+		// course mangement
+	/*	public void addLesson(Lesson lesson) {
+			records.add(lesson);
+			saveToFile();	
+		}
+		public boolean deleteLesson(Lesson lesson) {
+			for(int i=0;i<records.size();i++) {
+			if(records.get(i).getlessonId().equals(lesson.getlessonId())) {
+			records.remove(i);
+			saveToFile();
+			return true;
+			}}
+			return false;
+		}
+		public boolean editLesson(Lesson updatedLesson) {
+			for(int i=0;i<records.size();i++) {
+				if(records.get(i).getlessonId().equals(updatedLesson.getlessonId())) {
+				records.set(i,updatedLesson);
+				saveToFile();
+				return true;
+				}}
+				return false;
+		}
+		public ArrayList<Lesson> fetchLesson(){
+			return lessons;
+		}
+		public Lesson getLessonById(String lessonId) {
+			for(int i=0;i<records.size();i++) {
+				if(records.get(i).getlessonId().equals(getlessonId())){
+					return records.get(i);
+				}
+			}
+			return null;	
+		}
+		
+		// student mangement
+		public void markLessonCompleted(String lessonId) {
+			if(!progress.contains(lessonId))
+				progress.add(lessonId);
+		}
+		public boolean checkIfLessonCompleted(String lessonId) {
+			return progress.contains(lessonId);
+		}
+		public ArrayList<String> getprogress(){
+			return progress;
+		}
+*/
