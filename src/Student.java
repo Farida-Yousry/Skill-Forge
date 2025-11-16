@@ -8,9 +8,18 @@ import java.util.HashMap;
         public Student(String username, String pass, String id, String fullname,String role, String email){
             super(username, pass, email, id, fullname, role, 0);
         }
+        public ArrayList<String> getEnrolledCourses(){
+            ArrayList<String> courses = new ArrayList<>();
+            for(int i = 0; i < enrolledCourses.size(); i++)
+                courses.add(enrolledCourses.get(i).getCourseId());
+            return courses;
+        }
+        public Map<String, List<Boolean>> getProgress(){
+            return progress;
+        }
         ArrayList<Course> browseCourses(){
             //return the data from courses,jason
-            
+
             return null;
         }
         void enrollCourse(String courseId){

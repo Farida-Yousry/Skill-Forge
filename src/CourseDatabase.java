@@ -26,8 +26,11 @@ public class CourseDatabase {
     public ArrayList<Course> getAllCourses() {
         String json = readFromFile();
         ArrayList<Course> courses = new ArrayList<>();
+        if (json.length() < 3)  // empty file
+            return courses;
         // remove[ ]
         json = json.substring(1, json.length() - 1);
+        
         String[] courseObjects = json.split("\\},\\{");
 
         for (String obj : courseObjects) {
@@ -100,7 +103,6 @@ public class CourseDatabase {
         return sb.toString();
     }
     public boolean reomveCourse(Course course){
-        ArrayList<Course> courses = getAllCourses();
         for(int i = 0; i < courses.size(); i++){
             if(courses.get(i).getCourseId().equals(course.getCourseId())){
                 courses.remove(courses.get(i));  

@@ -33,11 +33,11 @@ public String getCourseId() {
         return instructorId;
     }
 
-    public List<Lesson> getLessons() {
+    public ArrayList<Lesson> getLessons() {
         return lessons;
     }
 
-    public List<String> getEnrolledStudents() {
+    public ArrayList<String> getEnrolledStudents() {
         return enrolledStudents;
     }
 
@@ -58,11 +58,11 @@ public String getCourseId() {
         this.instructorId = instructorId;
     }
 
-    public void setLessons(List<Lesson> lessons) {
+    public void setLessons(ArrayList<Lesson> lessons) {
         this.lessons = lessons;
     }
 
-    public void setEnrolledStudents(List<String> enrolledStudents) {
+    public void setEnrolledStudents(ArrayList<String> enrolledStudents) {
         this.enrolledStudents = enrolledStudents;
     }
     
