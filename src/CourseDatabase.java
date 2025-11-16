@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDatabase {
+    ArrayList<Course> courses;
+    public CourseDatabase(){
+        courses = getAllCourses();
+    }
     public String readFromFile(){
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("course.json"))){
@@ -52,12 +56,10 @@ public class CourseDatabase {
         return courses;
     }
     public void addCourse(Course course){
-        ArrayList<Course> courses = this.getAllCourses();
         courses.add(course);
         saveToFile();
     }
     public void saveToFile(){
-        ArrayList<Course> courses = this.getAllCourses();
         try (FileWriter writer = new FileWriter("course.json")) {
             writer.write("[\n"); 
 
@@ -65,12 +67,12 @@ public class CourseDatabase {
                 Course c = courses.get(i);
 
                 String jsonCourse = "{\n" +
-                        "  \"courseId\": \"" + c.getCourseId() + "\",\n" +
-                        "  \"title\": \"" + c.getTitle() + "\",\n" +
-                        "  \"description\": \"" + c.getDescription() + "\",\n" +
-                        "  \"instructorId\": \"" + c.getInstructorId() + "\"\n" +
-                        "  \"lessons\": " + lessonsToJson(c.getLessons()) + ",\n" +
-                        "}";
+                    "  \"courseId\": \"" + c.getCourseId() + "\",\n" +
+                    "  \"title\": \"" + c.getTitle() + "\",\n" +
+                    "  \"description\": \"" + c.getDescription() + "\",\n" +
+                    "  \"instructorId\": \"" + c.getInstructorId() + "\",\n" +
+                    "  \"lessons\": " + lessonsToJson(c.getLessons()) + "\n" +
+                "}";
 
                 writer.write(jsonCourse);
 
@@ -100,7 +102,7 @@ public class CourseDatabase {
     public boolean reomveCourse(Course course){
         ArrayList<Course> courses = getAllCourses();
         for(int i = 0; i < courses.size(); i++){
-            if(courses.get(i).getCourseId() == course.getCourseId()){
+            if(courses.get(i).getCourseId().equals(course.getCourseId())){
                 courses.remove(courses.get(i));  
                 saveToFile();
                 return true;
