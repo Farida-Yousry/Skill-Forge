@@ -1,4 +1,4 @@
-@ -0,0 +1,66 @@
+
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JList;
