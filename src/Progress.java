@@ -1,4 +1,3 @@
-
 public class Progress {
  private String courseId;
  private String lessonId;

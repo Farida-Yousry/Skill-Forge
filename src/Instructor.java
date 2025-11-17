@@ -7,7 +7,6 @@ public class Instructor extends UserAccount {
       super(userId,username,password,email,fullName,"Instructor",age);
       createdCourses=new ArrayList<>();
 	}
-<<<<<<< Updated upstream
 public Instructor() {}
 	public ArrayList<Course> getCreatedCourses() {
 		return createdCourses;
@@ -16,14 +15,6 @@ public Instructor() {}
 		if(!createdCourses.contains(course)) {
 			createdCourses.add(course);
 		}
-=======
-
-	public ArrayList<Course> getCreatedCourses() {
-		return createdCourses;
-	}
-	public void addCourse(String courseId) {
-		createdCourses.add(courseId);
->>>>>>> Stashed changes
 	}
 
 }

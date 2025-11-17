@@ -48,11 +48,7 @@ public class StudentLessonPannel extends JPanel {
 		
 		btnMarkCompleted.addActionListener(new ActionListener() 
 		{public void actionPerformed(ActionEvent e) {
-<<<<<<< Updated upstream
 			student.markLessonCompleted(lesson.getLessonId(),course.getCourseId());
-=======
-			student.markLessonCompleted(lesson.getLessonId());
->>>>>>> Stashed changes
 			btnMarkCompleted.setEnabled(false);
 			lblTitle.setText(lesson.getTitle() + "Completed..");
 			//save in File
@@ -62,11 +58,7 @@ public class StudentLessonPannel extends JPanel {
 	 if(student.checkIfLessonCompleted(lesson.getLessonId(),course.getCourseId())) {
 		 btnMarkCompleted.setEnabled(false);
 		 lblTitle.setText(lesson.getTitle() + "Completed..");
-<<<<<<< Updated upstream
 		 student.markLessonCompleted(lesson.getLessonId(),course.getCourseId());
-=======
-		 student.markLessonCompleted(lesson.getLessonId());
->>>>>>> Stashed changes
 	 }
 		
 		
