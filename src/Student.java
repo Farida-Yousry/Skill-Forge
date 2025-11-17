@@ -24,6 +24,7 @@ import java.util.HashMap;
         public ArrayList<Progress> getProgress(){
             return progress;
         }
+
     public boolean enrollCourse(Course course) {
     	for(Course e:enrolledCourses) {
     	if(e.getCourseId().equals(course.getCourseId())) {
@@ -40,6 +41,37 @@ import java.util.HashMap;
 		    	}}
 		    	progress.add(new Progress(courseId,lessonId));
 		    	
+=======
+        ArrayList<Course> browseCourses(){
+            //return the data from courses,jason
+
+            return null;
+        }
+        public boolean enrollCourse(Course course){
+            for(int i = 0; i < enrolledCourses.size(); i++){
+                if(enrolledCourses.get(i).getCourseId().equals(course.getCourseId()))    //found in the enrolled courses
+                    return false;
+            }
+            CourseDatabase cDb = new CourseDatabase();
+            ArrayList<Course> courses = cDb.getAllCourses();
+            for(int i = 0; i < courses.size(); i++){
+                if(courses.get(i).getCourseId().equals(course.getCourseId())){  //found in courses
+                    enrolledCourses.add(course);
+                    return true;
+                }
+            }
+            return false;
+        }
+        Lesson accessLesson(String lessonId){
+            //search if this lesson id in the enrolledcourses
+            return null;
+
+        }
+		// student mangement
+		/*public void markLessonCompleted(String lessonId) {
+			if(!progress.contains(lessonId))
+				progress.add(lessonId);
+>>>>>>> f2d6651a003d13b890d341dc75d6c7dfb3f4faf1
 		}
 		public boolean checkIfLessonCompleted(String lessonId,String courseId) {
 			for(Progress e:progress) {
