@@ -31,12 +31,15 @@ public class SignupGUI extends JFrame {
 	private JTextField txtUserName;
 	private JTextField txtPassword;
 	private JTextField txtEmail;
+	private UserDatabase db;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public SignupGUI() {
+		db=new UserDatabase();
+		db.readFromFile();
 		setBackground(SystemColor.controlHighlight);
 		setLayout(new BorderLayout(20,20));
 		setSize(600,450);
@@ -117,8 +120,13 @@ public class SignupGUI extends JFrame {
 				String email = txtEmail.getText().trim();
 				try {
 					int age=Integer.parseInt(txtAge.getText().trim());
-					UserAccount neww=new UserAccount();
-					neww.signup(fullName,userName,password,age,role,email);
+					UserAccount user;
+					if(role.equals("Student")) {
+						user=new Student();
+					}
+					else user=new Instructor();
+
+					db.signup(user,fullName,userName,password,age,role,email);
 				}
 				catch(NumberFormatException ee) {
 					JOptionPane.showMessageDialog(null,"Invalid age");

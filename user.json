@@ -1,0 +1,25 @@
+[
+  {
+    "userId": "S00001",
+    "role": "student",
+    "username": "alice123",
+    "email": "alice@example.com",
+    "passwordHash": "password123hashed",
+    "fullName": "Alice Marie Johnson",
+    "age": 20,
+    "enrolledCourses": ["C001"],
+    "progress": [
+      {"courseId":"C001","lessonId":"L001"}
+    ]
+  },
+  {
+    "userId": "I00001",
+    "role": "instructor",
+    "username": "bob_teacher",
+    "email": "bob@example.com",
+    "passwordHash": "password456hashed",
+    "fullName": "Bob Michael Smith",
+    "age": 35,
+    "createdCourses": ["C001"]
+  }
+]

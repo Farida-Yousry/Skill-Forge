@@ -24,13 +24,15 @@ public class LoginGUI extends JFrame{
 	private JTextField txtUserName;
 	private JTextField txtPassword;
 	private JComboBox<String> roleBox;
+	private UserDatabase db;
 	
 
 	/**
 	 * Create the panel.
 	 */
 	public LoginGUI() {
-		
+		db=new UserDatabase();
+		db.readFromFile();
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400,300);
@@ -89,8 +91,8 @@ public class LoginGUI extends JFrame{
 				String userName=txtUserName.getText().trim();
 				String password=txtPassword.getText().trim();
 				String role=(String)roleBox.getSelectedItem();
-				UserAccount user = new UserAccount();
-				boolean valid = user.login(userName,password,role);
+				
+				boolean valid = db.login(userName,password,role);
 	
 				if(valid) {
 					JOptionPane.showMessageDialog(null,"Login Successfully");

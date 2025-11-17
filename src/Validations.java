@@ -1,7 +1,7 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Validations {
+public class Validations  {
 
 	public boolean validateFullName(String fullName) {
 		if(fullName == null)
@@ -38,20 +38,5 @@ public class Validations {
 		return (password.matches(".*\\d{3}.*"));
 
 	}
-	public String hashPassword(String password) {
-			try {
-				MessageDigest pass = MessageDigest.getInstance("SHA-256");
-				byte[] temp = pass.digest(password.getBytes());
-				StringBuffer s = new StringBuffer();
-				for(byte b : temp)
-					s.append(String.format("%02x",b & 0xff));
-				return s.toString();
-			} catch (NoSuchAlgorithmException e) {
-				
-				e.printStackTrace();
-				return null;
-				
-		}
-		
-	}
+
 }

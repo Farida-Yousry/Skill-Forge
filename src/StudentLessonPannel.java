@@ -22,13 +22,14 @@ public class StudentLessonPannel extends JPanel {
 	private JLabel lblTitle;
 	private JTextArea txtArea;
 	private Student student;
-
+	private Course course;
 	/**
 	 * Create the panel.
 	 */
-	public StudentLessonPannel(Lesson lesson,Student student) {
+	public StudentLessonPannel(Lesson lesson,Student student,Course course) {
 		this.lesson=lesson;
 		this.student=student;
+		this.course=course;
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -47,17 +48,17 @@ public class StudentLessonPannel extends JPanel {
 		
 		btnMarkCompleted.addActionListener(new ActionListener() 
 		{public void actionPerformed(ActionEvent e) {
-			student.MarkLessonCompleted(lesson.getLessonId());
+			student.markLessonCompleted(lesson.getLessonId(),course.getCourseId());
 			btnMarkCompleted.setEnabled(false);
 			lblTitle.setText(lesson.getTitle() + "Completed..");
 			//save in File
 			}
 		});
 		
-	 if(student.checkIfLessonCompleted(lesson.getLessonId())) {
+	 if(student.checkIfLessonCompleted(lesson.getLessonId(),course.getCourseId())) {
 		 btnMarkCompleted.setEnabled(false);
 		 lblTitle.setText(lesson.getTitle() + "Completed..");
-		 student.MarkLessonCompleted(lesson.getLessonId());
+		 student.markLessonCompleted(lesson.getLessonId(),course.getCourseId());
 	 }
 		
 		

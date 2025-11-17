@@ -5,9 +5,10 @@ import javax.swing.JOptionPane;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-public class UserAccount extends Validations{
-
+public abstract class UserAccount{
 
 	private String userName;
 	private String password;
@@ -16,9 +17,13 @@ public class UserAccount extends Validations{
 	private String fullName;
 	private String role;
 	private int age;
+
 	
 	
-	public UserAccount(String username, String pass, String email, String id, String fullname, String role,int age){
+
+
+	public UserAccount(String id,String username, String pass, String email, String fullname, String role,int age){
+
 		userName = username;
 		password = pass;
 		this.email = email;
@@ -27,30 +32,46 @@ public class UserAccount extends Validations{
 		this.role = role;
 		this.age = age;
 		
+	}	
+	
+	public String hashPassword(String password) {
+		try {
+			MessageDigest pass = MessageDigest.getInstance("SHA-256");
+			byte[] temp = pass.digest(password.getBytes());
+			StringBuffer s = new StringBuffer();
+			for(byte b : temp)
+				s.append(String.format("%02x",b & 0xff));
+			return s.toString();
+		} catch (NoSuchAlgorithmException e) {
+			
+			e.printStackTrace();
+			return null;
+			
+	}
+	
+}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public void setAge(int age) {
+		this.age = age;
 	}
 	public UserAccount(){
-	}
-
-	public boolean login(String userName,String password,String role)  {
-		try(Scanner read = new Scanner(new File("Users.txt"))){
-			while(read.hasNextLine()) {
-				String data = read.nextLine().trim();
-				if(data.isEmpty())continue;
-				String[] hold = data.split(",");
-				
-				String name = hold[0];
-				String pass = hold[1];
-				String r = hold[2];
-				
-				if(name.equals(userName) && pass.equals(hashPassword(password)) && r.equals(role))
-					return true;
-			}
-		}
-		catch(FileNotFoundException e) {
-			System.out.println("Error");
-			e.printStackTrace();
-		}
-		return false;
 	}
 	 public void logout() {
 		 System.exit(0);
@@ -67,29 +88,7 @@ public class UserAccount extends Validations{
 		 return id;
 		
 	}
-	public void signup(String fullName,String userName,String password,int age,String role,String email) {
-		if(!validateFullName(fullName))
-		    JOptionPane.showMessageDialog(null,"Invalid name format[Please Enter at least 3 names]");
-		else if(!validateEmail(email))
-			 JOptionPane.showMessageDialog(null,"Invalid Email format");
-		else if(!validateUserName(userName))
-			JOptionPane.showMessageDialog(null,"Invalid Username format[Please Enter at least 5 characters]");
-		else if(!validatePassword(password))
-			JOptionPane.showMessageDialog(null,"Invalid Password format[Please Enter at least 3 digits ]");
-		else if(!validateAge(age))
-			JOptionPane.showMessageDialog(null,"Invalid age");
-	    else {
-		this.userName = userName.trim();
-		this.password = hashPassword(password);
-		this.email = email.trim();
-		this.userId = generateNewId(role);
-		this.fullName = fullName.trim();
-		this.role = role;
-		this.age = age;
-		//	saveToFile();
-		//JOptionPane.showMessageDialog(null,"Account Created");
-	}
-	}
+
 	public String getUserId(){
 		return userId;
 	}
@@ -104,5 +103,13 @@ public class UserAccount extends Validations{
 	}
 	public String getRole(){
 		return role;
+	}public String getPassword() {
+		return password;
+	}
+	public String getFullName() {
+		return fullName;
+	}
+	public int getAge() {
+		return age;
 	}
 }

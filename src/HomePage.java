@@ -39,7 +39,7 @@ public class HomePage extends JFrame {
 					e.printStackTrace();
 				}
 				UserDatabase db = new UserDatabase();
-				db.writeJson();
+				db.readFromFile();
 			}
 		});
 	}
