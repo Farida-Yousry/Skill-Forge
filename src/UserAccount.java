@@ -8,7 +8,11 @@ import java.io.FileNotFoundException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+<<<<<<< Updated upstream
 public abstract class UserAccount{
+=======
+public abstract class UserAccount extends Validations{
+>>>>>>> Stashed changes
 
 	private String userName;
 	private String password;
@@ -17,6 +21,7 @@ public abstract class UserAccount{
 	private String fullName;
 	private String role;
 	private int age;
+<<<<<<< Updated upstream
 
 	
 	
@@ -24,6 +29,9 @@ public abstract class UserAccount{
 
 	public UserAccount(String id,String username, String pass, String email, String fullname, String role,int age){
 
+=======
+	public UserAccount(String id,String username, String pass, String email, String fullname, String role,int age){
+>>>>>>> Stashed changes
 		userName = username;
 		password = pass;
 		this.email = email;
@@ -32,6 +40,7 @@ public abstract class UserAccount{
 		this.role = role;
 		this.age = age;
 		
+<<<<<<< Updated upstream
 	}	
 	
 	public String hashPassword(String password) {
@@ -44,6 +53,27 @@ public abstract class UserAccount{
 			return s.toString();
 		} catch (NoSuchAlgorithmException e) {
 			
+=======
+	}
+    public UserAccount() {}
+	public boolean login(String userName,String password,String role)  {
+		try(Scanner read = new Scanner(new File("Users.txt"))){
+			while(read.hasNextLine()) {
+				String data = read.nextLine().trim();
+				if(data.isEmpty())continue;
+				String[] hold = data.split(",");
+				
+				String name = hold[0];
+				String pass = hold[1];
+				String r = hold[2];
+				
+				if(name.equals(userName) && pass.equals(hashPassword(password)) && r.equals(role))
+					return true;
+			}
+		}
+		catch(FileNotFoundException e) {
+			System.out.println("Error");
+>>>>>>> Stashed changes
 			e.printStackTrace();
 			return null;
 			

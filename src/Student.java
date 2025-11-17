@@ -24,16 +24,23 @@ import java.util.HashMap;
         public ArrayList<Progress> getProgress(){
             return progress;
         }
+<<<<<<< Updated upstream
 
     public boolean enrollCourse(Course course) {
     	for(Course e:enrolledCourses) {
     	if(e.getCourseId().equals(course.getCourseId())) {
+=======
+    public boolean enrollCourse(Course course) {
+    	for(Course e:enrolledCourses) {
+    	if(e.getCourseId().equals(course.getCourseId()))) {
+>>>>>>> Stashed changes
     		return false;
     	}}
     	enrolledCourses.add(course);
     	return true;
     }
    
+<<<<<<< Updated upstream
 		public void markLessonCompleted(String lessonId,String courseId) {
 			for(Progress e:progress) {
 		    	if(e.getLessonId().equals(lessonId)&&e.getCourseId().equals(courseId)) {
@@ -69,6 +76,9 @@ import java.util.HashMap;
         }
 		// student mangement
 		/*public void markLessonCompleted(String lessonId) {
+=======
+		public void markLessonCompleted(String lessonId) {
+>>>>>>> Stashed changes
 			if(!progress.contains(lessonId))
 				progress.add(lessonId);
 >>>>>>> f2d6651a003d13b890d341dc75d6c7dfb3f4faf1
