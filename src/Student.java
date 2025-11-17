@@ -22,12 +22,20 @@ import java.util.HashMap;
 
             return null;
         }
-        void enrollCourse(String courseId){
-            //call browse courses and get the array list
-            //then search in this array if exist 
-            //if exsit search in the erolled sourses if exist
-            //if not exist add it to enrolledcourse
-            //and update the progress
+        public boolean enrollCourse(Course course){
+            for(int i = 0; i < enrolledCourses.size(); i++){
+                if(enrolledCourses.get(i).getCourseId().equals(course.getCourseId()))    //found in the enrolled courses
+                    return false;
+            }
+            CourseDatabase cDb = new CourseDatabase();
+            ArrayList<Course> courses = cDb.getAllCourses();
+            for(int i = 0; i < courses.size(); i++){
+                if(courses.get(i).getCourseId().equals(course.getCourseId())){  //found in courses
+                    enrolledCourses.add(course);
+                    return true;
+                }
+            }
+            return false;
         }
         Lesson accessLesson(String lessonId){
             //search if this lesson id in the enrolledcourses
