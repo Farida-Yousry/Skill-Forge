@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /UserAccount.class
 /Validations.class
 /User.class
@@ -13,3 +14,11 @@
 /SignupGUI.class
 /Test.class
 /Test$1.class
+=======
+/Student.class
+/UserDatabase.class
+/user.json
+/InstructorDashBoard$1.class
+/InstructorDashBoard$2.class
+/InstructorDashBoard.class
+>>>>>>> Stashed changes
