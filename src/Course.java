@@ -43,7 +43,7 @@ public class Course {
 	// setters
 	/*public void setCourseId(String courseId) {
 		this.courseId = courseId;
-	*/}
+	}*/
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -51,8 +51,8 @@ public class Course {
 		this.description = description;
 	}
 	/*public void setInstructorId(String instructorId) {
-		this.instructorId = instructorId;
-	*/}
+		this.instructorId = instructorId;}
+	*/
 	public void setLessons(ArrayList<Lesson> lessons) {
 		this.lessons = lessons;
 	}
@@ -107,6 +107,7 @@ public boolean removeEnrolledStudent(Student student) {
 	     return true;
 	     }
 	return false;
+}
 }
 
 

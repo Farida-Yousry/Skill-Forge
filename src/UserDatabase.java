@@ -134,7 +134,7 @@ public class UserDatabase{
     public boolean removeUser(UserAccount user){
         for(int i = 0; i < users.size(); i++){
             if(users.get(i).getUserId().equals(user.getUserId())){
-                users.remove(users.get(i));  
+                users.remove(i);  
                 saveToFile();
                 return true;
             }
