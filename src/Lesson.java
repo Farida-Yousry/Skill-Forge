@@ -14,7 +14,11 @@ public class Lesson {
 			this.lessonId=lessonId;
 			this.title=title;
 			this.content=content;
-			this.resources=resources;
+			if(resources==null) {
+				this.resources=new ArrayList<>();
+			}
+			else
+			this.resources=new ArrayList<>(resources);
    }
 	// setters
 		public void setContent(String content) {
@@ -24,7 +28,11 @@ public class Lesson {
 			this.title=title;
 		}
 		public void setResources(ArrayList<String> resources) {
-			this.resources=resources;
+			if(resources==null) {
+				this.resources=new ArrayList<>();
+			}
+			else
+			this.resources=new ArrayList<>(resources);
 		}
 		
 	// getters
