@@ -45,7 +45,6 @@ public class LoginGUI extends JFrame{
 		lblTitle.setFont(new Font("Verdana", Font.PLAIN, 35));
 		lblTitle.setForeground(Color.DARK_GRAY);
 		lblTitle.setBorder(BorderFactory.createEmptyBorder(20,0,10,0));
-		//add(lblTitle,BorderLayout.NORTH);
         getContentPane().add(lblTitle,BorderLayout.NORTH);
 		
 	    JPanel panel = new JPanel(new GridLayout(3,2,10,10));
@@ -97,6 +96,14 @@ public class LoginGUI extends JFrame{
 	
 				if(valid != null) {
 					JOptionPane.showMessageDialog(null,"Login Successfully");
+					if(role.equals("Instructor")) {
+						InstructorDashBoard dash =  new InstructorDashBoard();
+					dash.setVisible(true);
+				}
+					else {
+						StudentDashBoard dash =	new StudentDashBoard();
+						dash.setVisible(true);
+					}
 					dispose();
 				}
 				else {

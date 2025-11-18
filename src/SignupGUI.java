@@ -25,7 +25,6 @@ public class SignupGUI extends JFrame {
 
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtFullName;
 	private JComboBox<String> roleBox;
 	private JTextField txtAge;
 	private JTextField txtUserName;
@@ -36,7 +35,7 @@ public class SignupGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SignupGUI() {
+	public SignupGUI(Database db) {
 		setBackground(SystemColor.controlHighlight);
 		setLayout(new BorderLayout(20,20));
 		setSize(600,450);
@@ -52,14 +51,6 @@ public class SignupGUI extends JFrame {
 	    panel.setBackground(SystemColor.controlHighlight);
 	    panel.setBorder(BorderFactory.createEmptyBorder(20,40,20,40));
 	    
-	    
-		JLabel label = new JLabel(" Full Name :");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		panel.add(label);
-		txtFullName = new JTextField(15);
-		txtFullName.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtFullName.setBackground(SystemColor.inactiveCaption);
-		panel.add(txtFullName);
 		
 		JLabel label_1 = new JLabel(" UserName :");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -110,15 +101,18 @@ public class SignupGUI extends JFrame {
 		JButton btnNewButton = new JButton("Signup");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String fullName = txtFullName.getText().trim();
 				String userName = txtUserName.getText().trim();
 				String role = (String)roleBox.getSelectedItem();
 				String password = txtPassword.getText().trim();
 				String email = txtEmail.getText().trim();
 				try {
 					int age=Integer.parseInt(txtAge.getText().trim());
-					UserAccount neww=new UserAccount();
-					neww.signup(fullName,userName,password,age,role,email);
+					UserManager neww=new UserManager(db);
+					boolean valid = neww.signup(userName,password,age,role,email);
+					if(valid) {
+						dispose();
+					  new LoginGUI(db).setVisible(true);
+					}
 				}
 				catch(NumberFormatException ee) {
 					JOptionPane.showMessageDialog(null,"Invalid age");

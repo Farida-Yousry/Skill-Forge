@@ -97,7 +97,7 @@ public class HomePage extends JFrame {
 		
 		btnSignup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		     SignupGUI SignupFrame= new SignupGUI();
+		     SignupGUI SignupFrame= new SignupGUI(db);
 		     SignupFrame.setVisible(true);
 		     dispose();
 			}

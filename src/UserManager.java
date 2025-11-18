@@ -15,36 +15,31 @@ public class UserManager extends Validations {
 			this.users=new ArrayList<>();
 			}
 	}
-	public void signup(User user,String userName,String password,int age,String role,String email) {
+	public boolean signup(String userName,String password,int age,String role,String email) {
 		if(!validateEmail(email)) {
 			 JOptionPane.showMessageDialog(null,"Invalid Email format");
-		return;}	
+		return false;}	
 		else if(!validateUserName(userName)) {
 			JOptionPane.showMessageDialog(null,"Invalid Username format[Please Enter at least 5 characters]");
-		return;}
+		return false;}
 		else if(!validatePassword(password)) {
-			JOptionPane.showMessageDialog(null,"Invalid Password format[Please Enter at least 3 digits ]");
-		return;}
+			JOptionPane.showMessageDialog(null,"Invalid Password format[Please Enter at least 1 digits ]");
+		return false;}
 	else if(!validateAge(age)) {
 			JOptionPane.showMessageDialog(null,"Invalid age");
-			return;}
+			return false;}
 		for(User e:users) {
 			if(e.getUserName().equalsIgnoreCase(userName)||e.getEmail().equalsIgnoreCase(email)) {
 				JOptionPane.showMessageDialog(null,"User already exists");
-				return;
+				return false;
 			}
 		}
-		user.setUserName(userName.trim());
-		user.setPassword(hashPassword(password));
-		user.setEmail( email.trim());
-		user.setUserId(generateNewId(role));
-		user.setRole(role);
-		user.setAge(age);
+		User user = new User(userName.trim(),hashPassword(password),email.trim(),generateNewId(role),role,age);
 		users.add(user);
 		db.saveToUsersFile(users);
 		
 		JOptionPane.showMessageDialog(null,"Account Created Successfully");
-
+return true;
 	}
 	public User login(String userName,String password,String role)  {
 		String hashed = hashPassword(password);
