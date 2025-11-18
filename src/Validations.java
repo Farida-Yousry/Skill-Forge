@@ -35,7 +35,7 @@ public class Validations {
 	public boolean validatePassword(String password) {
 		if(password == null)
 			return false;
-		return (password.matches(".*\\d{3}.*"));
+		return (password.matches(".*\\d{1}.*"));
 
 	}
 	public String hashPassword(String password) {
