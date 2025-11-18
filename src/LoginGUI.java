@@ -16,21 +16,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class LoginGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JTextField txtUserName;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 	private JComboBox<String> roleBox;
+
 	
 
 	/**
 	 * Create the panel.
 	 */
-	public LoginGUI() {
+	public LoginGUI(Database db) {
 		
+	
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400,300);
@@ -66,7 +69,7 @@ public class LoginGUI extends JFrame{
 		JLabel label_1 = new JLabel("  Password : ");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel.add(label_1);
-		txtPassword = new JTextField(15);
+		txtPassword = new JPasswordField(15);
 		txtPassword.setBackground(SystemColor.inactiveCaption);
 		txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(txtPassword);
@@ -91,12 +94,12 @@ public class LoginGUI extends JFrame{
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userName=txtUserName.getText().trim();
-				String password=txtPassword.getText().trim();
+				String password=new String(txtPassword.getPassword());
 				String role=(String)roleBox.getSelectedItem();
-				UserAccount user = new UserAccount();
-				boolean valid = user.login(userName,password,role);
+				UserManager user = new UserManager(db);
+				User valid = user.login(userName,password,role);
 	
-				if(valid) {
+				if(valid != null) {
 					JOptionPane.showMessageDialog(null,"Login Successfully");
 					dispose();
 					
