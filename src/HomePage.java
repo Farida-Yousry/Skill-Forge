@@ -25,6 +25,7 @@ public class HomePage extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static Database db;
 
 	/**
 	 * Launch the application.
@@ -32,14 +33,15 @@ public class HomePage extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
+				try { 
+					db = new Database();
+					db.loadUsers();
 					HomePage frame = new HomePage();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				UserDatabase db = new UserDatabase();
-				db.writeJson();
+			
 			}
 		});
 	}
@@ -78,7 +80,7 @@ public class HomePage extends JFrame {
 		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		     LoginGUI loginFrame= new LoginGUI();
+		     LoginGUI loginFrame= new LoginGUI(db);
 		     loginFrame.setVisible(true);
 		     dispose();
 			}
