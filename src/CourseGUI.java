@@ -35,18 +35,19 @@ public class CourseGUI extends JPanel {
 	private JList<Course> courses;
 	private DefaultListModel<Course> courseModel;
 	private JButton btnAdd,btnEdit,btnDelete,btnView;
-	private CourseDatabase courseDb ;
+	private CourseManager courseManage;
 
 	/**
 	 * Create the panel.
 	 */
-	public CourseGUI() {
-		 courseDb = new CourseDatabase();
-		setLayout(new BorderLayout());
+	public CourseGUI(CourseManager courseManage, String instructorId) {
+		this.courseManage=courseManage;
+		setLayout(new BorderLayout(10,10));
 		
 		courseModel=new DefaultListModel<>();
+		ArrayList<Course> instCourses=courseManage.getCourseByInstructor(instructorId);
 		
-		for(Course e:courseDb.getAllCourses()) {
+		for(Course e:instCourses) {
 			courseModel.addElement(e);
 		}
 		
@@ -55,16 +56,19 @@ public class CourseGUI extends JPanel {
 		
 		courses.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting())
 		    load();
 			}
 		});
 		    add(new JScrollPane(courses),BorderLayout.WEST);
-		    JPanel panel=new JPanel(new GridLayout(3,1,10,10));
+		    JPanel panel=new JPanel(new GridLayout(4,1,10,10));
 		    
 		    txtTitle =new JTextField();
             txtCourseId = new JTextField();
             txtInstructorId = new JTextField();
 		    txtDescription=new JTextField();
+		    txtInstructorId.setEditable(false);
+		    txtCourseId.setEditable(false);
 		    
       panel.add(createPanel("Title",txtTitle));
       panel.add(createPanel("CourseID",txtCourseId));
@@ -84,12 +88,14 @@ public class CourseGUI extends JPanel {
        mainPanel.add(btnAdd);
        mainPanel.add(btnEdit);
        mainPanel.add(btnDelete);
+       mainPanel.add(btnView);
+       
        
        add(mainPanel,BorderLayout.SOUTH);
        
    	 btnAdd.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			addCourse();
+			addCourse(instructorId);
 		}
 	    
    	});
@@ -122,14 +128,17 @@ public class CourseGUI extends JPanel {
 		return panel;
 		
 	}
-		   private void addCourse() {
+		   private void addCourse(String instructorId) {
 				String title = txtTitle.getText().trim();
-				String courseId = txtCourseId.getText().trim();
 				String description = txtDescription.getText().trim();
-				String instructorId = txtInstructorId.getText().trim();
 					
-				Course course = new Course(courseId,title,description,instructorId);
-				courseDb.writeToFile(course);
+				if(title.isEmpty()) {
+					JOptionPane.showMessageDialog(this,"Please enter title and instructor id");
+					return;
+				}
+				String id=courseManage.generateNewId();
+				Course course = new Course(id,title,description,instructorId);
+				courseManage.createCourse(title, description, instructorId);
 				courseModel.addElement(course);
 				JOptionPane.showMessageDialog(this,"Course Added Successfully");
 
@@ -142,7 +151,7 @@ public class CourseGUI extends JPanel {
 				}
 				int confirm = JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this student?","Confirm",JOptionPane.YES_NO_OPTION);
 			    if(confirm == JOptionPane.YES_OPTION) {
-			      boolean deleted=courseDb.deleteCourse(selected.getCourseId());
+			      boolean deleted=courseManage.removeCourse(selected.getCourseId());
 			   if(deleted) {
 				   courseModel.removeElement(selected);
 			   JOptionPane.showMessageDialog(this,"Course deleted Successfully");
@@ -159,10 +168,25 @@ public class CourseGUI extends JPanel {
 					JOptionPane.showMessageDialog(this,"Select a Course First");
 					return;
 				}
-				selected.setTitle(txtTitle.getText().trim());
-				selected.setDescription(txtDescription.getText().trim());
+				String title = txtTitle.getText().trim();
+				String description = txtDescription.getText().trim();
 				
-				ArrayList<Course> updateCourses = new ArrayList<>();
+				if(title.isEmpty()) {
+					JOptionPane.showMessageDialog(this,"Please enter title");
+					return;
+				}
+				boolean updated=courseManage.editCourse(selected.getCourseId(),title,description);
+				
+				if(updated) {
+				selected.setTitle(title);
+				selected.setDescription(description);
+				courses.repaint();
+				JOptionPane.showMessageDialog(this,"Course updated");
+				}
+				else {
+					JOptionPane.showMessageDialog(this,"Can not update course");
+				}
+				/*ArrayList<Course> updateCourses = new ArrayList<>();
 				for(int i=0;i<courseModel.size();i++) {
 					updateCourses.add(courseModel.getElementAt(i));
 				}
@@ -176,15 +200,19 @@ public class CourseGUI extends JPanel {
 				courses.repaint();
 				
 				JOptionPane.showMessageDialog(this,"Course Updated Successfully");
-				
+				*/
 			}
             private void load(){
            	 Course selected = courses.getSelectedValue();
            	 if(selected==null) {
-					JOptionPane.showMessageDialog(this,"Please select a Course");
+					
 					return;
 				}
+           	 
            	 txtTitle.setText(selected.getTitle());
+           	 txtCourseId.setText(selected.getCourseId());
+           	 txtInstructorId.setText(selected.getInstructorId());
+           	 txtDescription.setText(selected.getDescription());
         
 		}
             private void view(){
@@ -193,19 +221,20 @@ public class CourseGUI extends JPanel {
    					JOptionPane.showMessageDialog(this,"Please select a Course");
    					return;
    				}
-              	 ArrayList<Student> students = selected.getEnrolledStudents();
+              	 ArrayList<String> students = selected.getEnrolledStudents();
               	 if(students.isEmpty()) {
               		JOptionPane.showMessageDialog(CourseGUI.this,"No Students enrolled in this Course!!");
               		return;
               	 }
               		StringBuilder sb = new StringBuilder("Enrolled Sudents:\n");
-              		for(Student s: students) {
-              			sb.append("-".append(s.getUsername()).append("(").append(s.getEmail()).append(")\n"));
+              		
+              		for(String s: students) {
+              			sb.append("-").append(s).append("\n");
               		}
               		JTextArea textArea = new JTextArea(sb.toString());
               		textArea.setEditable(false);
               		JScrollPane scrollPane = new JScrollPane(textArea);
-              		scrollPane.setPreferredSize(new Dimension(300,200));
+              	//	scrollPane.setPreferredSize(new Dimension(300,200));
               		JOptionPane.showMessageDialog(CourseGUI.this,scrollPane,"Students",JOptionPane.INFORMATION_MESSAGE);
               	 }
            

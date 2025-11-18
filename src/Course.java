@@ -94,4 +94,7 @@ public Lesson getLessonById(String lessonId) {
 	}
 	return null;	
 }
+public String toString() {
+	return title;
+}
 }

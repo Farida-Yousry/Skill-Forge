@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class CourseManager {
+public class CourseManager{
 	 private ArrayList<Course> courses;
 	 private Database db;
 	 
@@ -98,5 +98,15 @@ public class CourseManager {
 	    }
 	    	return enrolled;
 	    }
-	    
+	    public ArrayList<User> getEnrolledStudents(String courseId){
+	    	Course c = getCourseById(courseId);
+	    	ArrayList<User> enrolled = new ArrayList<>();
+	    	for(String studentId : c.getEnrolledStudents()) {
+	    		User u = db.getUserById(studentId);
+	    		if(u != null)
+	    			enrolled.add(u);
+	    	}
+	    	return enrolled;
+	    }
+	  
 }

@@ -23,13 +23,13 @@ public class UserManager extends Validations {
 			JOptionPane.showMessageDialog(null,"Invalid Username format[Please Enter at least 5 characters]");
 		return false;}
 		else if(!validatePassword(password)) {
-			JOptionPane.showMessageDialog(null,"Invalid Password format[Please Enter at least 1 digits ]");
+			JOptionPane.showMessageDialog(null,"Invalid Password format");
 		return false;}
 	else if(!validateAge(age)) {
 			JOptionPane.showMessageDialog(null,"Invalid age");
 			return false;}
 		for(User e:users) {
-			if(e.getUserName().equalsIgnoreCase(userName)||e.getEmail().equalsIgnoreCase(email)) {
+			if(e.getUserName().equalsIgnoreCase(userName) && e.getEmail().equalsIgnoreCase(email)) {
 				JOptionPane.showMessageDialog(null,"User already exists");
 				return false;
 			}

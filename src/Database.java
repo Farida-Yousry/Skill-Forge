@@ -51,4 +51,13 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	public User getUserById(String id) {
+		ArrayList<User> users=loadUsers();
+		for(User u:users) {
+			if(u.getUserId().equals(id)) {
+				return u;
+			}
+		}
+		return null;
+	}
 }

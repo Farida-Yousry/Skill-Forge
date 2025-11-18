@@ -33,10 +33,17 @@ public class Validations {
 
 	}
 	public boolean validatePassword(String password) {
-		if(password == null)
-			return false;
-		return (password.matches(".*\\d{1}.*"));
-
+		if(password == null|| password.length()<5) return false;
+			
+		boolean hasDigit=false;
+		for(int i=0;i<password.length();i++) {
+			char x=password.charAt(i);
+			if(x>='0'&& x<='9') {
+				hasDigit=true;
+				break;
+			}
+		}
+		return hasDigit;
 	}
 	public String hashPassword(String password) {
 			try {

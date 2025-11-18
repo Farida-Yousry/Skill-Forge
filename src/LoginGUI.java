@@ -97,7 +97,7 @@ public class LoginGUI extends JFrame{
 				if(valid != null) {
 					JOptionPane.showMessageDialog(null,"Login Successfully");
 					if(role.equals("Instructor")) {
-						InstructorDashBoard dash =  new InstructorDashBoard();
+						InstructorDashBoard dash =  new InstructorDashBoard(valid.getUserId());
 					dash.setVisible(true);
 				}
 					else {
